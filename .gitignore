@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+state.json
+*.key
+*.pem
+*.log
+private/
+work/
+deployment/
+mihomo.yaml
+subscription*.txt
