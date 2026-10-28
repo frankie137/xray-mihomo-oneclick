@@ -13,7 +13,7 @@ if [[ -f "$script_dir/manager.py" ]]; then
   exec python3 "$script_dir/manager.py" install "$@"
 fi
 # When downloaded alone, fetch a pinned, published source revision.
-revision="v1.0.0"
+revision="v1.0.1"
 temp_dir=$(mktemp -d)
 trap 'rm -rf -- "$temp_dir"' EXIT
 curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \

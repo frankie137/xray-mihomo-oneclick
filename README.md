@@ -1,4 +1,17 @@
-# Xray → mihomo 一键部署
+<div align="center">
+
+# 🛰️ Xray → mihomo
+
+**一键部署 REALITY 节点，生成 Clash Verge Rev 可导入的 HTTPS 订阅**
+
+[![CI](https://github.com/frankie137/xray-mihomo-oneclick/actions/workflows/ci.yml/badge.svg)](https://github.com/frankie137/xray-mihomo-oneclick/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/frankie137/xray-mihomo-oneclick)](https://github.com/frankie137/xray-mihomo-oneclick/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](CONTRIBUTING.md)
+
+[快速安装](#一键安装) · [导入订阅](#导入-clash-verge-rev) · [运维排错](#管理和排错) · [参与贡献](CONTRIBUTING.md) · [更新记录](CHANGELOG.md)
+
+</div>
 
 在 Debian / Ubuntu VPS 上部署 **VLESS + REALITY + XTLS Vision**，生成 Clash Verge Rev 可导入的完整 mihomo 订阅，通过 **HTTPS + 256 位随机路径令牌**发布。无需自有域名，不依赖第三方订阅转换服务。
 
@@ -11,7 +24,7 @@
 在 VPS 上执行：
 
 ```bash
-curl -fsSLo /tmp/xray-mihomo-install.sh https://raw.githubusercontent.com/frankie137/xray-mihomo-oneclick/v1.0.0/install.sh && sudo bash /tmp/xray-mihomo-install.sh
+curl -fsSLo /tmp/xray-mihomo-install.sh https://raw.githubusercontent.com/frankie137/xray-mihomo-oneclick/v1.0.1/install.sh && sudo bash /tmp/xray-mihomo-install.sh
 ```
 
 默认通过 api.ipify.org 获取出口 IPv4（该请求会向其披露服务器 IP）。也可显式指定，避免自动检测：
@@ -25,7 +38,7 @@ sudo bash /tmp/xray-mihomo-install.sh --server-ip YOUR_PUBLIC_IPV4
 ```bash
 git clone https://github.com/frankie137/xray-mihomo-oneclick.git
 cd xray-mihomo-oneclick
-git checkout v1.0.0
+git checkout v1.0.1
 sudo bash install.sh --server-ip YOUR_PUBLIC_IPV4
 ```
 
@@ -117,3 +130,11 @@ CI 检查客户端/服务端参数一致、随机凭据、输入验证、订阅�
 2026-10-28 实测：Ubuntu 22.04 x86_64 + Xray 26.10.21；macOS arm64 上 Clash Verge Rev 内置 mihomo 1.19.32 成功通过节点访问外网，出口为 VPS；HTTPS 订阅校验成功、无效令牌返回 404、Certbot 模拟续期成功。测试不代表所有运营商及地区的网络均可达。
 
 官方参考：[Xray 安装](https://github.com/XTLS/Xray-install)、[REALITY](https://xtls.github.io/en/config/transports/reality.html)、[mihomo VLESS](https://wiki.metacubex.one/en/config/proxies/vless/)、[IP 证书与 Certbot](https://letsencrypt.org/2026/03/11/shorter-certs-certbot/)。
+
+## 参与贡献
+
+欢迎通过 [Issue](https://github.com/frankie137/xray-mihomo-oneclick/issues/new/choose) 报告问题或提出建议。提交前请阅读 [贡献指南](CONTRIBUTING.md) 和 [行为准则](CODE_OF_CONDUCT.md)。安全问题与凭据泄露请参考 [安全政策](SECURITY.md)，公开报告中请先脱敏。
+
+## 许可证与致谢
+
+本项目使用 [MIT 许可证](LICENSE)。仓库结构与社区文档按 [frankie137/opensource-template](https://github.com/frankie137/opensource-template) 适配；模板原作者为 Embark Studios，相关版权声明见 [第三方声明](THIRD_PARTY_NOTICES.md)。Xray、mihomo、Certbot 和 nginx 的许可证由各自上游管理。
