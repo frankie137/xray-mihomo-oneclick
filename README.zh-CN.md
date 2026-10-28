@@ -26,7 +26,7 @@
 在 VPS 上执行：
 
 ```bash
-curl -fsSLo /tmp/xray-mihomo-install.sh https://raw.githubusercontent.com/frankie137/xray-mihomo-oneclick/v1.0.1/install.sh && sudo bash /tmp/xray-mihomo-install.sh
+curl -fsSLo /tmp/xray-mihomo-install.sh https://raw.githubusercontent.com/frankie137/xray-mihomo-oneclick/1.0.2/install.sh && sudo bash /tmp/xray-mihomo-install.sh
 ```
 
 默认通过 api.ipify.org 获取出口 IPv4（该请求会向其披露服务器 IP）。也可显式指定，避免自动检测：
@@ -40,7 +40,7 @@ sudo bash /tmp/xray-mihomo-install.sh --server-ip YOUR_PUBLIC_IPV4
 ```bash
 git clone https://github.com/frankie137/xray-mihomo-oneclick.git
 cd xray-mihomo-oneclick
-git checkout v1.0.1
+git checkout 1.0.2
 sudo bash install.sh --server-ip YOUR_PUBLIC_IPV4
 ```
 

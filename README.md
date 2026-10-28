@@ -26,7 +26,7 @@ Requirements: a fresh Debian 12 / Ubuntu 22.04 or newer installation, systemd, a
 Run on your VPS:
 
 ```bash
-curl -fsSLo /tmp/xray-mihomo-install.sh https://raw.githubusercontent.com/frankie137/xray-mihomo-oneclick/v1.0.1/install.sh && sudo bash /tmp/xray-mihomo-install.sh
+curl -fsSLo /tmp/xray-mihomo-install.sh https://raw.githubusercontent.com/frankie137/xray-mihomo-oneclick/1.0.2/install.sh && sudo bash /tmp/xray-mihomo-install.sh
 ```
 
 By default, the installer detects the outbound public IPv4 address using api.ipify.org. This request discloses the server's IP address to that service. To skip automatic detection, specify the address explicitly:
@@ -40,7 +40,7 @@ You can also review the source before installing:
 ```bash
 git clone https://github.com/frankie137/xray-mihomo-oneclick.git
 cd xray-mihomo-oneclick
-git checkout v1.0.1
+git checkout 1.0.2
 sudo bash install.sh --server-ip YOUR_PUBLIC_IPV4
 ```
 
