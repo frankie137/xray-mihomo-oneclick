@@ -2,38 +2,40 @@
 
 # 🛰️ Xray → mihomo
 
-**一键部署 REALITY 节点，生成 Clash Verge Rev 可导入的 HTTPS 订阅**
+English | [简体中文](README.zh-CN.md)
+
+**Deploy a REALITY node and serve an HTTPS mihomo subscription for Clash Verge Rev with one command.**
 
 [![CI](https://github.com/frankie137/xray-mihomo-oneclick/actions/workflows/ci.yml/badge.svg)](https://github.com/frankie137/xray-mihomo-oneclick/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/frankie137/xray-mihomo-oneclick)](https://github.com/frankie137/xray-mihomo-oneclick/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](CONTRIBUTING.md)
 
-[快速安装](#一键安装) · [导入订阅](#导入-clash-verge-rev) · [运维排错](#管理和排错) · [参与贡献](CONTRIBUTING.md) · [更新记录](CHANGELOG.md)
+[Quick start](#quick-start) · [Import into Clash Verge Rev](#import-into-clash-verge-rev) · [Management and troubleshooting](#management-and-troubleshooting) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
 
 </div>
 
-在 Debian / Ubuntu VPS 上部署 **VLESS + REALITY + XTLS Vision**，生成 Clash Verge Rev 可导入的完整 mihomo 订阅，通过 **HTTPS + 256 位随机路径令牌**发布。无需自有域名，不依赖第三方订阅转换服务。
+Deploy **VLESS + REALITY + XTLS Vision** on a Debian/Ubuntu VPS and generate a complete mihomo configuration for Clash Verge Rev. The subscription is served over **HTTPS with a random 256-bit path token**. No domain name or third-party subscription converter is required.
 
-服务器端使用 Xray，客户端使用 mihomo；直接生成对应配置，不在服务端运行 mihomo。单用户、单节点，适合个人 VPS。
+Xray runs on the server; mihomo runs on the client. The installer generates the matching client configuration directly. This project is designed for a single user and a single VPS node.
 
-## 一键安装
+## Quick start
 
-要求：全新 Debian 12 / Ubuntu 22.04 或更新版本、systemd、公网 IPv4、root、curl、Python 3.10+。已在 Ubuntu 22.04 x86_64 上实测。其他系统尚未实测。
+Requirements: a fresh Debian 12 / Ubuntu 22.04 or newer installation, systemd, a public IPv4 address, root access, curl, and Python 3.10+. Ubuntu 22.04 x86_64 has been tested; other systems have not yet been verified.
 
-在 VPS 上执行：
+Run on your VPS:
 
 ```bash
 curl -fsSLo /tmp/xray-mihomo-install.sh https://raw.githubusercontent.com/frankie137/xray-mihomo-oneclick/v1.0.1/install.sh && sudo bash /tmp/xray-mihomo-install.sh
 ```
 
-默认通过 api.ipify.org 获取出口 IPv4（该请求会向其披露服务器 IP）。也可显式指定，避免自动检测：
+By default, the installer detects the outbound public IPv4 address using api.ipify.org. This request discloses the server's IP address to that service. To skip automatic detection, specify the address explicitly:
 
 ```bash
 sudo bash /tmp/xray-mihomo-install.sh --server-ip YOUR_PUBLIC_IPV4
 ```
 
-或先审阅源码后安装：
+You can also review the source before installing:
 
 ```bash
 git clone https://github.com/frankie137/xray-mihomo-oneclick.git
@@ -42,43 +44,43 @@ git checkout v1.0.1
 sudo bash install.sh --server-ip YOUR_PUBLIC_IPV4
 ```
 
-安装会使用 apt 安装 nginx、curl、unzip、python3-venv 等依赖，从官方安装器下载 Xray，并在独立 venv 安装 Certbot。首次申请 IP 证书会以无邮箱方式注册 Let's Encrypt 账户并同意其服务条款。CA 会公开记录 IP 证书；部署脚本执行即表示接受此行为。
+The installer uses apt to install nginx, curl, unzip, python3-venv, and related dependencies. It downloads Xray through the official installer and installs Certbot in a dedicated virtual environment. The initial IP certificate request registers a Let's Encrypt account without an email address and accepts its terms of service. IP certificates are publicly logged by the certificate authority. Running the deployment script accepts this behavior.
 
-| TCP 端口 | 用途 | 必须放行 |
+| TCP port | Purpose | Must remain reachable |
 | --- | --- | --- |
-| 80 | ACME HTTP-01 签发及续期验证 | 是，持续保留 |
-| 443 | Xray REALITY | 是 |
-| 8443 | HTTPS 订阅 | 是 |
+| 80 | ACME HTTP-01 certificate issuance and renewal | Yes |
+| 443 | Xray REALITY | Yes |
+| 8443 | HTTPS subscription | Yes |
 
-SSH 端口保持原样。有活动 UFW 时，脚本只添加以上三条放行规则；不会启用或重置防火墙。云厂商安全组须自行放行。其他防火墙规则不会自动管理。默认端口占用或已有 Xray 时首次安装会停止，不覆盖已有业务。
+The SSH port is preserved. If UFW is active, the installer adds allow rules for the three ports above; it does not enable or reset the firewall. Configure your cloud provider's security groups separately. Other firewall rules are not managed automatically. On a fresh installation, occupied ports or an existing Xray installation cause the script to stop to avoid overwriting an existing service.
 
-自定义：
+Custom options:
 
 ```bash
 sudo bash install.sh --server-ip YOUR_PUBLIC_IPV4 --port 443 --sub-port 8443 --sni www.cloudflare.com
 ```
 
-REALITY 目标需能从 VPS 访问，支持 TLS 1.3、HTTP/2，SNI 与证书匹配。默认目标不保证在所有网络可用。重复安装沿用原有状态、端口和密钥，不会套用新的端口/SNI 参数；需要迁移时请人工备份处理。
+The REALITY target must be reachable from the VPS, support TLS 1.3 and HTTP/2, and present a certificate matching the SNI. The default target may not work on every network. Reinstalling preserves the existing state, ports, and keys; new port/SNI arguments do not replace saved settings. Back up the state and handle migrations manually.
 
-## 导入 Clash Verge Rev
+## Import into Clash Verge Rev
 
-在 VPS 查看个人凭据：
+Display your private connection details on the VPS:
 
 ```bash
 sudo xray-mihomo show
 ```
 
-复制 `https://YOUR_PUBLIC_IPV4:8443/<随机令牌>/mihomo.yaml`，在 Clash Verge Rev 的「订阅」页面粘贴链接并导入，选中该配置，在「代理」中选择 `PROXY → VPS-REALITY`，然后按需打开系统代理或 TUN。
+Copy the subscription URL, which looks like `https://YOUR_PUBLIC_IPV4:8443/<random-token>/mihomo.yaml`. Paste it into the **Profiles / Subscriptions** page in Clash Verge Rev and import it. Activate the profile, select `PROXY → VPS-REALITY`, and enable the system proxy or TUN mode as needed.
 
-订阅是完整配置，使用 mihomo 支持的 JSON/YAML 1.2 格式，包含节点、DNS 和路由。局域网地址直连，其余流量默认走代理；没有默认启用中国大陆直连规则。未打开局域网代理监听，未暴露控制 API。客户端界面可能因版本不同稍有变化。
+The subscription is a complete configuration in mihomo-compatible JSON/YAML 1.2 format, including the node, DNS settings, and routing rules. Private LAN destinations connect directly; other traffic uses the proxy by default. Mainland China bypass rules are not enabled by default. The configuration does not expose the local proxy to the LAN or expose a control API. UI labels may vary between client versions.
 
-也会输出 `vless://` 分享链接，便于使用支持 REALITY 的其他客户端。
+The command also prints a `vless://` share link for other clients that support REALITY.
 
-当前固定的 Xray 版本要求现代 ClientHello。订阅已显式设置 `reality-opts.support-x25519mlkem768: true`；不要在编辑节点时移除。Clash Verge Rev 内置 mihomo `1.19.32` 已通过实测；更旧内核可能需要先升级。其他客户端使用 VLESS 分享链接时也须支持相应握手。
+The pinned Xray version requires a modern ClientHello. The generated subscription explicitly sets `reality-opts.support-x25519mlkem768: true`; keep this option when editing the node. Basic connectivity has been verified with mihomo `1.19.32` bundled with Clash Verge Rev. Older cores may need an update. Other clients importing the VLESS share link must also support the required handshake.
 
-**订阅链接和 VLESS 链接都是访问凭据。请勿提交 GitHub、发到公开 Issue 或交给第三方转换网站。** HTTPS 只保护传输；拿到订阅的人仍可使用节点。
+**Subscription URLs and VLESS share links are access credentials. Do not commit them to GitHub, post them in public issues, or send them to third-party converters.** HTTPS protects the transfer; anyone with the subscription can still use the node.
 
-## 管理和排错
+## Management and troubleshooting
 
 ```bash
 sudo xray-mihomo status
@@ -90,51 +92,51 @@ sudo /opt/xray-mihomo/acme/bin/certbot certificates
 sudo /opt/xray-mihomo/acme/bin/certbot renew --dry-run --cert-name xray-mihomo
 ```
 
-IP 证书使用 Let's Encrypt `shortlived` profile，有效期约 6 天。systemd 每 6 小时检查是否需要续期，续期成功后验证并重载 nginx。请保持 80 端口可达和系统时间准确。续期失败可能使订阅更新失效；REALITY 代理本身不依赖该证书。
+IP certificates use Let's Encrypt's `shortlived` profile and are valid for approximately six days. A systemd timer checks for renewal every six hours. Successful renewals validate and reload nginx. Keep TCP port 80 reachable and the system clock accurate. A failed renewal can prevent subscription updates; the REALITY proxy itself does not depend on this certificate.
 
-撤销订阅 URL 并产生新令牌：
+Revoke the subscription URL and generate a new path token:
 
 ```bash
 sudo xray-mihomo rotate-token
 sudo xray-mihomo show
 ```
 
-之后需要在客户端更新订阅地址。此操作只撤销旧订阅 URL，**不会撤销已经下载的节点 UUID**。节点凭据泄露时需要同时替换 state.json 中的 UUID 并重新运行安装、重新导入；先保存状态备份，勿在公开 Issue 粘贴该文件。
+Update the URL in your client afterward. This revokes only the old subscription URL; **it does not revoke node UUIDs already downloaded by clients**. If node credentials are exposed, also replace the UUID in state.json, rerun the installer, and reimport the configuration. Back up the state first, and never paste that file into a public issue.
 
-| 路径 | 内容 |
+| Path | Contents |
 | --- | --- |
-| `/etc/xray-mihomo/state.json` | root 专用，UUID、密钥、令牌 |
-| `/usr/local/etc/xray/config.json` | Xray 配置，root:xray 0640 |
-| `/var/lib/xray-mihomo/mihomo.yaml` | 客户端订阅，root:www-data 0640 |
-| `/etc/nginx/conf.d/xray-mihomo.conf` | 专用站点，包含私密令牌 |
-| `/var/backups/xray-mihomo/` | 配置快照，含敏感信息 |
-| `/etc/letsencrypt/` | ACME 账户及证书私钥 |
+| `/etc/xray-mihomo/state.json` | Root-only state: UUID, keys, and token |
+| `/usr/local/etc/xray/config.json` | Xray configuration, root:xray, mode 0640 |
+| `/var/lib/xray-mihomo/mihomo.yaml` | Client subscription, root:www-data, mode 0640 |
+| `/etc/nginx/conf.d/xray-mihomo.conf` | Dedicated site configuration containing the private token |
+| `/var/backups/xray-mihomo/` | Configuration snapshots containing sensitive data |
+| `/etc/letsencrypt/` | ACME account and certificate private keys |
 
-nginx 对订阅请求关闭访问日志，未知路径返回 404；只发布客户端配置，不发布服务器私钥。Xray 拒绝访问常见内网、回环和链路本地 IP 段。服务故障自动重启；安装配置阶段失败会尝试恢复旧配置，已安装的软件包会保留。不是系统快照，也不会自动卸载依赖。
+nginx access logging is disabled for subscription requests, and unknown paths return 404. Only the client configuration is published; server private keys are not. Xray blocks common private, loopback, and link-local destination ranges. Xray restarts after failures. If the configuration stage fails, the installer attempts to restore the previous configuration; installed packages remain. This is not a full system snapshot, and dependencies are not automatically uninstalled.
 
-卸载时先备份状态和证书，然后停止 Xray 与 `xray-mihomo-renew.timer`，删除本项目专用 nginx 配置并执行 `nginx -t && systemctl reload nginx`，再按上表清理专用文件。**不要直接卸载 nginx 或删除整个 `/etc/letsencrypt`，以免影响其他站点。** Xray 程序的卸载请参考官方安装器。
+To uninstall, first back up the state and certificates. Stop Xray and `xray-mihomo-renew.timer`, remove this project's dedicated nginx configuration, and run `nginx -t && systemctl reload nginx`. Then remove the project-specific files listed above as appropriate. **Do not uninstall nginx or delete all of `/etc/letsencrypt` if other sites depend on them.** Refer to the official Xray installer for removing the Xray binary and service.
 
-## 版本和测试
+## Versions and validation
 
-- Xray `26.10.21`；使用官方安装器固定提交 `e42df6a772e60dd7b058f852262c4dbeb0bc231d`，校验脚本 SHA256；官方安装器再校验 Xray 发行包 SHA256。
-- Certbot `5.8.0`；其传递依赖和 apt 系统包未完全锁定，安装需要访问官方软件源、GitHub、PyPI 和 ACME 服务。
-- 项目脚本 MIT；Xray、mihomo、Certbot、nginx 的许可证分别由其上游管理。仓库不分发上游二进制。
+- Xray `26.10.21`, installed through official installer commit `e42df6a772e60dd7b058f852262c4dbeb0bc231d`. The script's SHA256 is checked, and the official installer verifies the Xray release archive's SHA256.
+- Certbot `5.8.0`. Its transitive dependencies and apt packages are not fully locked. Installation requires access to package repositories, GitHub, PyPI, and the ACME service.
+- Project scripts are MIT-licensed. Xray, mihomo, Certbot, and nginx retain their respective upstream licenses. This repository does not distribute their binaries.
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
 bash -n install.sh
 ```
 
-CI 检查客户端/服务端参数一致、随机凭据、输入验证、订阅路径隔离、文件权限和 shell 语法。实际部署还须验证 Xray 配置、nginx 配置、HTTPS 订阅及使用真实 mihomo 内核的代理连接。安装不会修改 SSH 密码、密钥或登录策略。
+CI checks matching client/server parameters, random credential generation, input validation, subscription path isolation, file permissions, and Bash syntax. Deployment validation should also cover Xray and nginx configuration checks, HTTPS subscription retrieval, and an actual proxy connection using mihomo. The installer does not change SSH passwords, keys, or login policies.
 
-2026-10-28 实测：Ubuntu 22.04 x86_64 + Xray 26.10.21；macOS arm64 上 Clash Verge Rev 内置 mihomo 1.19.32 成功通过节点访问外网，出口为 VPS；HTTPS 订阅校验成功、无效令牌返回 404、Certbot 模拟续期成功。测试不代表所有运营商及地区的网络均可达。
+Basic checks on 2026-10-28 used Ubuntu 22.04 x86_64 with Xray 26.10.21 and Clash Verge Rev's bundled mihomo 1.19.32 on macOS arm64. Proxy requests reached the internet through the VPS, HTTPS subscription validation passed, invalid tokens returned 404, and Certbot's renewal dry run succeeded. These checks established basic connectivity. Intermittent connection timeouts were subsequently observed on the test network and remain under investigation; sustained stability has not yet been verified.
 
-官方参考：[Xray 安装](https://github.com/XTLS/Xray-install)、[REALITY](https://xtls.github.io/en/config/transports/reality.html)、[mihomo VLESS](https://wiki.metacubex.one/en/config/proxies/vless/)、[IP 证书与 Certbot](https://letsencrypt.org/2026/03/11/shorter-certs-certbot/)。
+Official references: [Xray installer](https://github.com/XTLS/Xray-install), [REALITY](https://xtls.github.io/en/config/transports/reality.html), [mihomo VLESS](https://wiki.metacubex.one/en/config/proxies/vless/), and [IP certificates with Certbot](https://letsencrypt.org/2026/03/11/shorter-certs-certbot/).
 
-## 参与贡献
+## Contributing
 
-欢迎通过 [Issue](https://github.com/frankie137/xray-mihomo-oneclick/issues/new/choose) 报告问题或提出建议。提交前请阅读 [贡献指南](CONTRIBUTING.md) 和 [行为准则](CODE_OF_CONDUCT.md)。安全问题与凭据泄露请参考 [安全政策](SECURITY.md)，公开报告中请先脱敏。
+Use the [issue templates](https://github.com/frankie137/xray-mihomo-oneclick/issues/new/choose) to report bugs or suggest improvements. Read the [contributor guide](CONTRIBUTING.md) and [code of conduct](CODE_OF_CONDUCT.md) before contributing. For vulnerabilities or exposed credentials, follow the [security policy](SECURITY.md). Redact sensitive information from public reports.
 
-## 许可证与致谢
+## License and acknowledgments
 
-本项目使用 [MIT 许可证](LICENSE)。仓库结构与社区文档按 [frankie137/opensource-template](https://github.com/frankie137/opensource-template) 适配；模板原作者为 Embark Studios，相关版权声明见 [第三方声明](THIRD_PARTY_NOTICES.md)。Xray、mihomo、Certbot 和 nginx 的许可证由各自上游管理。
+This project is licensed under the [MIT License](LICENSE). Its repository structure and community documentation are adapted from [frankie137/opensource-template](https://github.com/frankie137/opensource-template), originally authored by Embark Studios. See [third-party notices](THIRD_PARTY_NOTICES.md) for attribution. Xray, mihomo, Certbot, and nginx retain their respective upstream licenses.
