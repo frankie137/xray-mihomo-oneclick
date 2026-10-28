@@ -84,3 +84,7 @@ Evidence: [isolated-idle requests](requests-isolated-idle.json), [summary](summa
 - [OpenVPN's performance troubleshooting guide](https://openvpn.net/as-docs/v3/tutorials/tutorial--vpn-performance-troubleshooting/) recommends comparing paths and observing CPU while reproducing the problem; its product-specific tuning is not applied to Xray here.
 - [Xray community performance discussion #2925](https://github.com/XTLS/Xray-core/discussions/2925) illustrates why stream counts, transport, and resource observations should be recorded. Its reported throughput is not a prediction for this VPS.
 - [ESnet iperf3 documentation](https://software.es.net/iperf/invoking.html) documents controlled stream and throughput tests. This run used curl small-response requests, **not iperf3**, and does not publish a bandwidth figure.
+
+## Higher-concurrency follow-up
+
+The [16/32/64 established-connection test](held-connections/README.md) verifies actual held connections and original-socket reuse, rather than treating the earlier eight-worker cap as a capacity limit.

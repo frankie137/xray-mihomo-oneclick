@@ -36,6 +36,15 @@ def main():
             'load1': float(Path('/proc/loadavg').read_text().split()[0]),
             'xray_fds': len(list(Path('/proc/' + pid + '/fd').iterdir())),
         }
+        # Count established server sockets without publishing peer addresses.
+        ports = {443: 0, 8443: 0}
+        for table in ('/proc/net/tcp', '/proc/net/tcp6'):
+            for line in Path(table).read_text().splitlines()[1:]:
+                fields = line.split()
+                port = int(fields[1].rsplit(':', 1)[1], 16)
+                if fields[3] == '01' and port in ports:
+                    ports[port] += 1
+        row.update({'established_' + str(port): count for port, count in ports.items()})
         if previous_cpu:
             delta = sum(cpu) - sum(previous_cpu)
             idle = cpu[3] + cpu[4] - previous_cpu[3] - previous_cpu[4]

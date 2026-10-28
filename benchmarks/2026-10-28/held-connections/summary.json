@@ -1,0 +1,46 @@
+{
+  "levels": [
+    {
+      "level": 16,
+      "connections": 48,
+      "established": 48,
+      "reused": 48,
+      "setup_p50_s": 1.084,
+      "setup_p95_s": 2.781,
+      "setup_max_s": 4.703,
+      "reuse_p95_s": 1.073
+    },
+    {
+      "level": 32,
+      "connections": 96,
+      "established": 96,
+      "reused": 96,
+      "setup_p50_s": 1.362,
+      "setup_p95_s": 3.345,
+      "setup_max_s": 4.596,
+      "reuse_p95_s": 0.823
+    },
+    {
+      "level": 64,
+      "connections": 192,
+      "established": 192,
+      "reused": 192,
+      "setup_p50_s": 1.138,
+      "setup_p95_s": 1.49,
+      "setup_max_s": 1.83,
+      "reuse_p95_s": 0.218
+    }
+  ],
+  "resources": {
+    "samples": 415,
+    "first_utc": "2026-10-28T12:18:27.061602+00:00",
+    "last_utc": "2026-10-28T12:25:24.895634+00:00",
+    "peak_xray_cpu_pct": 15.94,
+    "peak_host_cpu_busy_pct": 24.75,
+    "peak_xray_rss_MiB": 55.95,
+    "minimum_available_MiB": 440.41,
+    "peak_established_8443": 64,
+    "xray_restarts": 0,
+    "original_xray_process_unchanged": true
+  }
+}

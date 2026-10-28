@@ -142,3 +142,5 @@ CI 检查客户端/服务端参数一致、随机凭据、输入验证、订阅�
 ## 许可证与致谢
 
 本项目使用 [MIT 许可证](LICENSE)。仓库结构与社区文档按 [frankie137/opensource-template](https://github.com/frankie137/opensource-template) 适配；模板原作者为 Embark Studios，相关版权声明见 [第三方声明](THIRD_PARTY_NOTICES.md)。Xray、mihomo、Certbot 和 nginx 的许可证由各自上游管理。
+
+补充实测：[16/32/64 并发连接保持测试](benchmarks/2026-10-28/held-connections/README.md)，验证真实同时连接数及原连接复用；最高测试档位不代表承载上限。

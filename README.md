@@ -142,3 +142,5 @@ Use the [issue templates](https://github.com/frankie137/xray-mihomo-oneclick/iss
 ## License and acknowledgments
 
 This project is licensed under the [MIT License](LICENSE). Its repository structure and community documentation are adapted from [frankie137/opensource-template](https://github.com/frankie137/opensource-template), originally authored by Embark Studios. See [third-party notices](THIRD_PARTY_NOTICES.md) for attribution. Xray, mihomo, Certbot, and nginx retain their respective upstream licenses.
+
+The [16/32/64 held-connection follow-up](benchmarks/2026-10-28/held-connections/README.md) measures actual simultaneous connections and original-socket reuse.

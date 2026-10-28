@@ -121,3 +121,17 @@ pages and is not the same measurement as systemd's cgroup `MemoryCurrent`.
 
 See the [2026-10-28 report](../benchmarks/2026-10-28/README.md) for a measured example
 and its limitations.
+
+## Established connections and original-socket reuse
+
+`concurrency_bench.py` measures held connections rather than merely starting threads together. In the private input, add `"controller_secret": "YOUR_ISOLATED_CONTROLLER_SECRET"` for your independent loopback test core. Its HTTP proxy defaults to port 18891 and controller to port 18892. Use only the isolated client's controller; its connection count includes every connection using that instance.
+
+```bash
+python3 tools/concurrency_bench.py --private-config private/benchmark.json --levels 16 32 64 --waves 3 --hold-seconds 15 --output private/held-connections
+```
+
+Each wave opens real HTTPS connections, validates the first response, keeps sockets open for the hold period, and sends a second request using the original socket. Automatic reopening is disabled. The controller is sampled every second during the hold; unavailable samples are omitted, so check that samples exist before claiming observed concurrency. The script writes `connections.jsonl` and `summary.json`; exceptions are redacted, but always review before publishing.
+
+Levels must increase, with a hard ceiling of 256, at most five waves and a 30-second hold. These limits are guardrails, not a promise that the host can handle them. Establishment or same-socket success below 95% stops escalation. Watch server resources between levels and stop manually if pressure appears. A pass establishes neither maximum capacity nor users supported. The sampler also counts established server sockets on ports 443/8443 without publishing peer addresses.
+
+See the [16/32/64 follow-up](../benchmarks/2026-10-28/held-connections/README.md) for measured results.
