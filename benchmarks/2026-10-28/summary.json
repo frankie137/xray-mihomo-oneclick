@@ -1,0 +1,273 @@
+{
+  "window_start_utc": "2026-10-28T11:50:38.077086+00:00",
+  "window_end_utc": "2026-10-28T11:54:23.031861+00:00",
+  "proxied": {
+    "requests": 196,
+    "success": 196,
+    "failed": 0,
+    "success_rate": 1.0,
+    "latency_success_only_s": {
+      "p50": 1.0272,
+      "p95": 2.7332,
+      "p99": 3.9143,
+      "max": 4.9146
+    },
+    "failure_total_s": []
+  },
+  "controls": {
+    "requests": 12,
+    "success": 12,
+    "failed": 0,
+    "success_rate": 1.0,
+    "latency_success_only_s": {
+      "p50": 0.7137,
+      "p95": 1.8627,
+      "p99": 2.3261,
+      "max": 2.442
+    },
+    "failure_total_s": []
+  },
+  "all_requests": 208,
+  "body_bytes": 208528,
+  "rate_limited_stages": [
+    {
+      "name": "outside_proxy_control",
+      "concurrency": 1,
+      "requests": 6,
+      "success": 6,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 0.7514,
+        "p95": 1.2901,
+        "p99": 1.369,
+        "max": 1.3887
+      },
+      "failure_total_s": []
+    },
+    {
+      "name": "cold_connections_c1",
+      "concurrency": 1,
+      "requests": 20,
+      "success": 20,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 0.9118,
+        "p95": 1.7671,
+        "p99": 1.8225,
+        "max": 1.8363
+      },
+      "failure_total_s": []
+    },
+    {
+      "name": "cold_connections_c2",
+      "concurrency": 2,
+      "requests": 24,
+      "success": 24,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 1.5711,
+        "p95": 3.0206,
+        "p99": 3.4152,
+        "max": 3.4987
+      },
+      "failure_total_s": []
+    },
+    {
+      "name": "cold_connections_c4",
+      "concurrency": 4,
+      "requests": 32,
+      "success": 32,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 1.4093,
+        "p95": 2.913,
+        "p99": 4.4166,
+        "max": 4.9146
+      },
+      "failure_total_s": []
+    },
+    {
+      "name": "cold_connections_c8",
+      "concurrency": 8,
+      "requests": 48,
+      "success": 48,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 1.1736,
+        "p95": 2.6641,
+        "p99": 3.6438,
+        "max": 3.7117
+      },
+      "failure_total_s": []
+    },
+    {
+      "name": "after_idle_1",
+      "concurrency": 1,
+      "requests": 4,
+      "success": 4,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 0.6944,
+        "p95": 0.8176,
+        "p99": 0.829,
+        "max": 0.8318
+      },
+      "failure_total_s": []
+    },
+    {
+      "name": "after_idle_2",
+      "concurrency": 1,
+      "requests": 4,
+      "success": 4,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 1.1786,
+        "p95": 2.57,
+        "p99": 2.7434,
+        "max": 2.7867
+      },
+      "failure_total_s": []
+    },
+    {
+      "name": "outside_proxy_control_after",
+      "concurrency": 1,
+      "requests": 6,
+      "success": 6,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 0.5766,
+        "p95": 2.1562,
+        "p99": 2.3848,
+        "max": 2.442
+      },
+      "failure_total_s": []
+    }
+  ],
+  "burst_stages": [
+    {
+      "name": "burst_c2",
+      "simultaneous_start_workers": 2,
+      "requests": 8,
+      "success": 8,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 1.5815,
+        "p95": 3.4448,
+        "p99": 3.8115,
+        "max": 3.9032
+      },
+      "failure_total_s": []
+    },
+    {
+      "name": "burst_c4",
+      "simultaneous_start_workers": 4,
+      "requests": 16,
+      "success": 16,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 0.8281,
+        "p95": 1.3156,
+        "p99": 1.6197,
+        "max": 1.6957
+      },
+      "failure_total_s": []
+    },
+    {
+      "name": "burst_c8",
+      "simultaneous_start_workers": 8,
+      "requests": 32,
+      "success": 32,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 0.8087,
+        "p95": 2.7957,
+        "p99": 3.8488,
+        "max": 4.1243
+      },
+      "failure_total_s": []
+    }
+  ],
+  "server": {
+    "samples": 175,
+    "start_utc": "2026-10-28T11:52:37.025411+00:00",
+    "end_utc": "2026-10-28T11:55:31.632198+00:00",
+    "xray_cpu_max_pct": 7.97,
+    "host_cpu_busy_max_pct": 11.88,
+    "rss_peak_mib": 45.43,
+    "available_memory_min_mib": 447.38,
+    "peak_fds": 470,
+    "restart_count": 0,
+    "listen_overflows": 0,
+    "listen_drops": 0,
+    "backlog_drops": 0
+  },
+  "network": {
+    "protocol": "ICMP",
+    "sent": 20,
+    "received": 20,
+    "loss_pct": 0.0,
+    "rtt_ms": {
+      "min": 168.118,
+      "mean": 180.149,
+      "max": 252.568,
+      "stddev": 23.605
+    }
+  },
+  "initial_all_requests": 200,
+  "initial_proxied": {
+    "requests": 188,
+    "success": 188,
+    "failed": 0,
+    "success_rate": 1.0,
+    "latency_success_only_s": {
+      "p50": 1.0432,
+      "p95": 2.7617,
+      "p99": 3.932,
+      "max": 4.9146
+    },
+    "failure_total_s": []
+  },
+  "isolated_idle_stages": [
+    {
+      "name": "isolated_client_idle_1",
+      "requests": 4,
+      "success": 4,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 1.2716,
+        "p95": 1.7277,
+        "p99": 1.7794,
+        "max": 1.7924
+      },
+      "failure_total_s": []
+    },
+    {
+      "name": "isolated_client_idle_2",
+      "requests": 4,
+      "success": 4,
+      "failed": 0,
+      "success_rate": 1.0,
+      "latency_success_only_s": {
+        "p50": 0.8662,
+        "p95": 0.9334,
+        "p99": 0.9411,
+        "max": 0.9431
+      },
+      "failure_total_s": []
+    }
+  ],
+  "supplemental_idle_start_utc": "2026-10-28T12:03:08.391016+00:00",
+  "supplemental_idle_last_request_utc": "2026-10-28T12:05:16.464388+00:00"
+}

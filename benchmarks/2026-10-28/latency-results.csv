@@ -1,0 +1,14 @@
+stage,requests,success,failed,p50_s,p95_s,max_s
+outside_proxy_control,6,6,0,0.7514,1.2901,1.3887
+cold_connections_c1,20,20,0,0.9118,1.7671,1.8363
+cold_connections_c2,24,24,0,1.5711,3.0206,3.4987
+cold_connections_c4,32,32,0,1.4093,2.913,4.9146
+cold_connections_c8,48,48,0,1.1736,2.6641,3.7117
+after_idle_1,4,4,0,0.6944,0.8176,0.8318
+after_idle_2,4,4,0,1.1786,2.57,2.7867
+outside_proxy_control_after,6,6,0,0.5766,2.1562,2.442
+burst_c2,8,8,0,1.5815,3.4448,3.9032
+burst_c4,16,16,0,0.8281,1.3156,1.6957
+burst_c8,32,32,0,0.8087,2.7957,4.1243
+isolated_client_idle_1,4,4,0,1.2716,1.7277,1.7924
+isolated_client_idle_2,4,4,0,0.8662,0.9334,0.9431

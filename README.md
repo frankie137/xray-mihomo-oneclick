@@ -133,6 +133,8 @@ Basic checks on 2026-10-28 used Ubuntu 22.04 x86_64 with Xray 26.10.21 and Clash
 
 Official references: [Xray installer](https://github.com/XTLS/Xray-install), [REALITY](https://xtls.github.io/en/config/transports/reality.html), [mihomo VLESS](https://wiki.metacubex.one/en/config/proxies/vless/), and [IP certificates with Certbot](https://letsencrypt.org/2026/03/11/shorter-certs-certbot/).
 
+A measured, bounded connection-pressure example and its limitations are available in the [2026-10-28 benchmark report](benchmarks/2026-10-28/README.md). See [benchmark tools](tools/README.md) to reproduce the tests without changing production configuration.
+
 ## Contributing
 
 Use the [issue templates](https://github.com/frankie137/xray-mihomo-oneclick/issues/new/choose) to report bugs or suggest improvements. Read the [contributor guide](CONTRIBUTING.md) and [code of conduct](CODE_OF_CONDUCT.md) before contributing. For vulnerabilities or exposed credentials, follow the [security policy](SECURITY.md). Redact sensitive information from public reports.

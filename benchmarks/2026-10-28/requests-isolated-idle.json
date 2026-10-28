@@ -1,0 +1,90 @@
+[
+  {
+    "at": "2026-10-28T12:04:08.393503+00:00",
+    "stage": "isolated_client_idle_1",
+    "pause_start_utc": "2026-10-28T12:03:08.391016+00:00",
+    "sequence": 1,
+    "ok": true,
+    "curl_exit": 0,
+    "http_status": 200,
+    "total_s": 1.182154,
+    "bytes": 1456
+  },
+  {
+    "at": "2026-10-28T12:04:09.594143+00:00",
+    "stage": "isolated_client_idle_1",
+    "pause_start_utc": "2026-10-28T12:03:08.391016+00:00",
+    "sequence": 2,
+    "ok": true,
+    "curl_exit": 0,
+    "http_status": 200,
+    "total_s": 1.361087,
+    "bytes": 1456
+  },
+  {
+    "at": "2026-10-28T12:04:10.968915+00:00",
+    "stage": "isolated_client_idle_1",
+    "pause_start_utc": "2026-10-28T12:03:08.391016+00:00",
+    "sequence": 3,
+    "ok": true,
+    "curl_exit": 0,
+    "http_status": 200,
+    "total_s": 0.96088,
+    "bytes": 1456
+  },
+  {
+    "at": "2026-10-28T12:04:11.943157+00:00",
+    "stage": "isolated_client_idle_1",
+    "pause_start_utc": "2026-10-28T12:03:08.391016+00:00",
+    "sequence": 4,
+    "ok": true,
+    "curl_exit": 0,
+    "http_status": 200,
+    "total_s": 1.792363,
+    "bytes": 1456
+  },
+  {
+    "at": "2026-10-28T12:05:13.760723+00:00",
+    "stage": "isolated_client_idle_2",
+    "pause_start_utc": "2026-10-28T12:04:13.754160+00:00",
+    "sequence": 1,
+    "ok": true,
+    "curl_exit": 0,
+    "http_status": 200,
+    "total_s": 0.94308,
+    "bytes": 1456
+  },
+  {
+    "at": "2026-10-28T12:05:14.725073+00:00",
+    "stage": "isolated_client_idle_2",
+    "pause_start_utc": "2026-10-28T12:04:13.754160+00:00",
+    "sequence": 2,
+    "ok": true,
+    "curl_exit": 0,
+    "http_status": 200,
+    "total_s": 0.878451,
+    "bytes": 1456
+  },
+  {
+    "at": "2026-10-28T12:05:15.623882+00:00",
+    "stage": "isolated_client_idle_2",
+    "pause_start_utc": "2026-10-28T12:04:13.754160+00:00",
+    "sequence": 3,
+    "ok": true,
+    "curl_exit": 0,
+    "http_status": 200,
+    "total_s": 0.825471,
+    "bytes": 1456
+  },
+  {
+    "at": "2026-10-28T12:05:16.464388+00:00",
+    "stage": "isolated_client_idle_2",
+    "pause_start_utc": "2026-10-28T12:04:13.754160+00:00",
+    "sequence": 4,
+    "ok": true,
+    "curl_exit": 0,
+    "http_status": 200,
+    "total_s": 0.854,
+    "bytes": 1456
+  }
+]

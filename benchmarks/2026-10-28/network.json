@@ -1,0 +1,12 @@
+{
+  "protocol": "ICMP",
+  "sent": 20,
+  "received": 20,
+  "loss_pct": 0.0,
+  "rtt_ms": {
+    "min": 168.118,
+    "mean": 180.149,
+    "max": 252.568,
+    "stddev": 23.605
+  }
+}

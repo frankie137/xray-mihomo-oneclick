@@ -1,0 +1,7 @@
+{
+  "cpu_count": 1,
+  "xray_version": "Xray 26.10.21 (Xray, Penetrates Everything.) 1b1647c (go1.27.3 linux/amd64)",
+  "kernel": "Linux 5.15.0-194-generic",
+  "mem_total_kb": 722236,
+  "xray_restarts": 0
+}

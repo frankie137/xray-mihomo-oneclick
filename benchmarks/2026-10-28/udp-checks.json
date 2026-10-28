@@ -1,0 +1,20 @@
+[
+  {
+    "attempt": 1,
+    "success": true,
+    "result": "PASS: SOCKS5 UDP through mihomo \u2192 Xray XUDP \u2192 1.1.1.1 DNS, answers: 2",
+    "error": ""
+  },
+  {
+    "attempt": 2,
+    "success": true,
+    "result": "PASS: SOCKS5 UDP through mihomo \u2192 Xray XUDP \u2192 1.1.1.1 DNS, answers: 2",
+    "error": ""
+  },
+  {
+    "attempt": 3,
+    "success": true,
+    "result": "PASS: SOCKS5 UDP through mihomo \u2192 Xray XUDP \u2192 1.1.1.1 DNS, answers: 2",
+    "error": ""
+  }
+]

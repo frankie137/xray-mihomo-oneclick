@@ -133,6 +133,8 @@ CI 检查客户端/服务端参数一致、随机凭据、输入验证、订阅�
 
 官方参考：[Xray 安装](https://github.com/XTLS/Xray-install)、[REALITY](https://xtls.github.io/en/config/transports/reality.html)、[mihomo VLESS](https://wiki.metacubex.one/en/config/proxies/vless/)、[IP 证书与 Certbot](https://letsencrypt.org/2026/03/11/shorter-certs-certbot/)。
 
+受控连接压力测试的实测数据和限制见 [2026-10-28 测试报告](benchmarks/2026-10-28/README.md)；可复用脚本及不改生产配置的运行方法见 [测试工具说明](tools/README.md)。
+
 ## 参与贡献
 
 欢迎通过 [Issue](https://github.com/frankie137/xray-mihomo-oneclick/issues/new/choose) 报告问题或提出建议。提交前请阅读 [贡献指南](CONTRIBUTING.md) 和 [行为准则](CODE_OF_CONDUCT.md)。安全问题与凭据泄露请参考 [安全政策](SECURITY.md)，公开报告中请先脱敏。
