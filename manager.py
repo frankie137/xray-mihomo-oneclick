@@ -99,12 +99,17 @@ def xray_config(s):
 
 def mihomo_config(s):
     # JSON is valid YAML 1.2 and avoids YAML quoting/injection problems.
+    domestic_dns = ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"]
+    rules_url = "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo"
     return {"mixed-port": 7890, "allow-lan": False, "bind-address": "127.0.0.1",
         "mode": "rule", "log-level": "info", "ipv6": False,
         "dns": {"enable": True, "listen": "127.0.0.1:1053", "ipv6": False,
             "enhanced-mode": "fake-ip", "fake-ip-range": "198.18.0.1/16",
-            "default-nameserver": ["1.1.1.1", "8.8.8.8"],
-            "nameserver": ["https://1.1.1.1/dns-query", "https://8.8.8.8/dns-query"]},
+            "default-nameserver": ["223.5.5.5", "119.29.29.29"],
+            "nameserver": ["https://1.1.1.1/dns-query", "https://8.8.8.8/dns-query"],
+            "nameserver-policy": {"rule-set:cn-domain": domestic_dns},
+            "direct-nameserver": domestic_dns,
+            "direct-nameserver-follow-policy": True},
         "proxies": [{"name": "VPS-REALITY", "type": "vless", "server": s["ip"],
             "port": s["port"], "uuid": s["uuid"], "network": "tcp", "udp": True,
             "tls": True, "flow": "xtls-rprx-vision", "servername": s["sni"],
@@ -112,9 +117,28 @@ def mihomo_config(s):
             "reality-opts": {"public-key": s["public_key"], "short-id": s["short_id"],
                              "support-x25519mlkem768": True}}],
         "proxy-groups": [{"name": "PROXY", "type": "select", "proxies": ["VPS-REALITY", "DIRECT"]}],
-        "rules": ["IP-CIDR,127.0.0.0/8,DIRECT,no-resolve", "IP-CIDR,10.0.0.0/8,DIRECT,no-resolve",
-            "IP-CIDR,172.16.0.0/12,DIRECT,no-resolve", "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
-            "IP-CIDR,169.254.0.0/16,DIRECT,no-resolve", "MATCH,PROXY"]}
+        "rule-providers": {
+            "cn-domain": {"type": "http", "behavior": "domain", "format": "mrs",
+                "path": "./ruleset/cn-domain.mrs", "url": f"{rules_url}/geosite/cn.mrs",
+                "interval": 86400, "proxy": "PROXY"},
+            "cn-ip": {"type": "http", "behavior": "ipcidr", "format": "mrs",
+                "path": "./ruleset/cn-ip.mrs", "url": f"{rules_url}/geoip/cn.mrs",
+                "interval": 86400, "proxy": "PROXY"},
+        },
+        "rules": [
+            "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve",
+            "IP-CIDR,10.0.0.0/8,DIRECT,no-resolve",
+            "IP-CIDR,172.16.0.0/12,DIRECT,no-resolve",
+            "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
+            "IP-CIDR,169.254.0.0/16,DIRECT,no-resolve",
+            "IP-CIDR,100.64.0.0/10,DIRECT,no-resolve",
+            "IP-CIDR6,::1/128,DIRECT,no-resolve",
+            "IP-CIDR6,fc00::/7,DIRECT,no-resolve",
+            "IP-CIDR6,fe80::/10,DIRECT,no-resolve",
+            "RULE-SET,cn-domain,DIRECT",
+            "RULE-SET,cn-ip,DIRECT",
+            "MATCH,PROXY",
+        ]}
 
 
 def subscription_url(s):

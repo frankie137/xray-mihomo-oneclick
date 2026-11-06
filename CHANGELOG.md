@@ -4,6 +4,10 @@ All notable changes are documented here, following [Keep a Changelog](https://ke
 
 ## [Unreleased]
 
+### Changed
+
+- Generated subscriptions route mainland China domains, mainland China IPs, and local networks directly, with the VPS proxy as the default for other traffic.
+
 ## [1.0.2] - 2026-10-28
 
 ### Added

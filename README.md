@@ -72,7 +72,9 @@ sudo xray-mihomo show
 
 Copy the subscription URL, which looks like `https://YOUR_PUBLIC_IPV4:8443/<random-token>/mihomo.yaml`. Paste it into the **Profiles / Subscriptions** page in Clash Verge Rev and import it. Activate the profile, select `PROXY → VPS-REALITY`, and enable the system proxy or TUN mode as needed.
 
-The subscription is a complete configuration in mihomo-compatible JSON/YAML 1.2 format, including the node, DNS settings, and routing rules. Private LAN destinations connect directly; other traffic uses the proxy by default. Mainland China bypass rules are not enabled by default. The configuration does not expose the local proxy to the LAN or expose a control API. UI labels may vary between client versions.
+The subscription contains the node, DNS settings, and routing rules in mihomo-compatible JSON/YAML 1.2 format. In profiles generated from the current source, loopback and LAN addresses and destinations matching the mainland China domain or IP rule sets connect directly. Other destinations use the `PROXY` group, with `VPS-REALITY` as its default node.
+
+Mihomo fetches the [MetaCubeX MRS rule sets](https://github.com/MetaCubeX/meta-rules-dat) through `PROXY` and checks for updates every 24 hours. Direct connections use AliDNS and DNSPod over HTTPS. Once your server is serving the new profile, refresh the existing subscription in Clash Verge Rev and use **Rule** mode. The pinned `1.0.2` installer above generates the older LAN-only routing policy.
 
 The command also prints a `vless://` share link for other clients that support REALITY.
 

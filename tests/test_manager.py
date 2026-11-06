@@ -33,6 +33,22 @@ class ConfigTests(unittest.TestCase):
         self.assertEqual(len(self.s["token"]), 64)
         self.assertEqual(len(self.s["short_id"]), 16)
 
+    def test_subscription_defaults_to_china_direct_and_proxy_fallback(self):
+        config = json.loads(m.dump(m.mihomo_config(self.s)))
+        self.assertEqual(config["mode"], "rule")
+        self.assertEqual(config["rules"][-3:], [
+            "RULE-SET,cn-domain,DIRECT", "RULE-SET,cn-ip,DIRECT", "MATCH,PROXY",
+        ])
+        self.assertIn("IP-CIDR,192.168.0.0/16,DIRECT,no-resolve", config["rules"][:-3])
+        self.assertEqual(config["proxy-groups"][0]["proxies"][0], "VPS-REALITY")
+        for name, behavior in (("cn-domain", "domain"), ("cn-ip", "ipcidr")):
+            provider = config["rule-providers"][name]
+            self.assertEqual(provider["behavior"], behavior)
+            self.assertEqual(provider["format"], "mrs")
+            self.assertEqual(provider["proxy"], "PROXY")
+        self.assertEqual(config["dns"]["nameserver-policy"]["rule-set:cn-domain"],
+                         config["dns"]["direct-nameserver"])
+
     def test_invalid_inputs_rejected(self):
         for values in [("127.0.0.1", 443, 8443, "example.com"),
                        ("8.8.8.8", 80, 8443, "example.com"),

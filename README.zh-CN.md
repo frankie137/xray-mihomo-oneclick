@@ -72,7 +72,9 @@ sudo xray-mihomo show
 
 复制 `https://YOUR_PUBLIC_IPV4:8443/<随机令牌>/mihomo.yaml`，在 Clash Verge Rev 的「订阅」页面粘贴链接并导入，选中该配置，在「代理」中选择 `PROXY → VPS-REALITY`，然后按需打开系统代理或 TUN。
 
-订阅是完整配置，使用 mihomo 支持的 JSON/YAML 1.2 格式，包含节点、DNS 和路由。局域网地址直连，其余流量默认走代理；没有默认启用中国大陆直连规则。未打开局域网代理监听，未暴露控制 API。客户端界面可能因版本不同稍有变化。
+订阅使用 mihomo 支持的 JSON/YAML 1.2 格式，包含节点、DNS 和路由。当前源码生成的订阅默认让回环地址、局域网、中国大陆域名和 IP 直连。其余流量使用 `PROXY` 组，默认节点为 `VPS-REALITY`。
+
+mihomo 通过 `PROXY` 下载 [MetaCubeX MRS 规则库](https://github.com/MetaCubeX/meta-rules-dat)，每 24 小时检查更新。直连使用阿里 DNS 和 DNSPod 的 HTTPS 解析。服务器提供新配置后，在 Clash Verge Rev 刷新原订阅并使用「规则」模式即可。上面的固定版本 `1.0.2` 安装命令仍会生成只对局域网直连的旧配置。
 
 也会输出 `vless://` 分享链接，便于使用支持 REALITY 的其他客户端。
 
