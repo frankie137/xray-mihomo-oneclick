@@ -106,6 +106,8 @@ def mihomo_config(s):
         "dns": {"enable": True, "listen": "127.0.0.1:1053", "ipv6": False,
             "enhanced-mode": "fake-ip", "fake-ip-range": "198.18.0.1/16",
             "default-nameserver": ["223.5.5.5", "119.29.29.29"],
+            "follow-rule": True, "respect-rules": True,
+            "proxy-server-nameserver": ["223.5.5.5", "119.29.29.29"],
             "nameserver": ["https://1.1.1.1/dns-query", "https://8.8.8.8/dns-query"],
             "nameserver-policy": {"rule-set:cn-domain": domestic_dns},
             "direct-nameserver": domestic_dns,
@@ -136,7 +138,7 @@ def mihomo_config(s):
             "IP-CIDR6,fc00::/7,DIRECT,no-resolve",
             "IP-CIDR6,fe80::/10,DIRECT,no-resolve",
             "RULE-SET,cn-domain,DIRECT",
-            "RULE-SET,cn-ip,DIRECT",
+            "RULE-SET,cn-ip,DIRECT,no-resolve",
             "MATCH,PROXY",
         ]}
 

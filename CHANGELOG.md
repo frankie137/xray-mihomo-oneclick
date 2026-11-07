@@ -8,6 +8,11 @@ All notable changes are documented here, following [Keep a Changelog](https://ke
 
 - Generated subscriptions route mainland China domains, mainland China IPs, and local networks directly, with the VPS proxy as the default for other traffic.
 
+### Fixed
+
+- Generated subscriptions enable DNS routing through rules in Stash and mihomo, with independent proxy-server DNS to avoid recursive resolution. Overseas DNS queries can use the proxy while domestic DNS retains direct routing.
+- The mainland China IP rule set uses `no-resolve` so domain requests can reach the proxy fallback without waiting for an extra local DNS lookup.
+
 ## [1.0.2] - 2026-10-28
 
 ### Added

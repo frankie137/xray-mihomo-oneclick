@@ -37,7 +37,7 @@ class ConfigTests(unittest.TestCase):
         config = json.loads(m.dump(m.mihomo_config(self.s)))
         self.assertEqual(config["mode"], "rule")
         self.assertEqual(config["rules"][-3:], [
-            "RULE-SET,cn-domain,DIRECT", "RULE-SET,cn-ip,DIRECT", "MATCH,PROXY",
+            "RULE-SET,cn-domain,DIRECT", "RULE-SET,cn-ip,DIRECT,no-resolve", "MATCH,PROXY",
         ])
         self.assertIn("IP-CIDR,192.168.0.0/16,DIRECT,no-resolve", config["rules"][:-3])
         self.assertEqual(config["proxy-groups"][0]["proxies"][0], "VPS-REALITY")
@@ -48,6 +48,10 @@ class ConfigTests(unittest.TestCase):
             self.assertEqual(provider["proxy"], "PROXY")
         self.assertEqual(config["dns"]["nameserver-policy"]["rule-set:cn-domain"],
                          config["dns"]["direct-nameserver"])
+        self.assertTrue(config["dns"]["follow-rule"])
+        self.assertTrue(config["dns"]["respect-rules"])
+        self.assertEqual(config["dns"]["proxy-server-nameserver"],
+                         config["dns"]["default-nameserver"])
 
     def test_invalid_inputs_rejected(self):
         for values in [("127.0.0.1", 443, 8443, "example.com"),
